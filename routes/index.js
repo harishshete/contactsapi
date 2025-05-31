@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 
 const status = require('./status');
-const contacts = require('../routes/contactsRoutes');
+const contacts = require('./contactsRoutes');
 
 
 app.use('/',status);
