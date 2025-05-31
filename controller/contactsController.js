@@ -4,9 +4,7 @@ const Contact = require('../models/contacts');
 exports.creaateContact = async (req, res, next) =>{
 //    res.status(200).json({pass_string:req.params.pass_string})
 
-if(req.params.pass_string)
-    {
-        console.log(req.params.pass_string)
+if(req.params.pass_string){
         if (req.params.pass_string == 'perforce')
         {
             const newContact = new Contact({
@@ -17,6 +15,7 @@ if(req.params.pass_string)
 
             try {
                 const savedContact = await newContact.save();
+                if(savedContact)
                 res.status(201).json(savedContact);
             } catch (error) {
                 res.status(500).json(error);
@@ -28,47 +27,68 @@ if(req.params.pass_string)
 else
     res.status(400).json("Something went wrong! Contact the administrator")    
 
+}
 
 
-
-
-
-    /*
-    if(req.params.pass_string)
-    {
-        if (req.params.pass_string == 'perforce')
-        {
-            res.status(201).json("You are allowed to create contact");
+// Get all the contacts
+exports.getAllContacts = async (req,res) =>{
+    if(req.params.pass_string){
+        if (req.params.pass_string == 'perforce'){
+            try {
+                const allContacts = await Contact.find();
+                if(allContacts)
+                res.status(200).json(allContacts);
+            } catch (error) {
+                res.status(500).json(error);
+            }
         }
         else
         res.status(401).json("You are NOT allowed to create contact")
     }
     else
     res.status(400).json("Something went wrong! Contact the administrator")
-    */
-
-
 }
 
 
 
+// Update Contact 
+exports.updateContact = async (req,res)=>{
 
-
-
-
-/*
-
-exports.isPresent = async (req, res, next) => {
-    const token = req.headers['authorization'];
-    const authToken = await AuthTokens.findOne({ token: token });
-    console.log(authToken);
-    if (authToken != null) {
-        // res.status(204).json("Login First");
-        next();
-    } else {
-        res.json("Login First");
+        if(req.params.pass_string){
+        if (req.params.pass_string == 'perforce'){
+            try {
+                const updatedContact = await Contact.findByIdAndUpdate(req.body.id,{$set: req.body},{ new: true });
+                if(updatedContact)
+                 res.status(200).json(updatedContact);
+            } catch (error) {
+                res.status(500).json("Could Not Update " + error)
+            }
+        }
+        else
+        res.status(401).json("You are NOT allowed to create contact")
     }
+    else
+    res.status(400).json("Something went wrong! Contact the administrator")
 }
 
 
-*/
+//Delete Contact
+exports.deleteContact = async (req,res)=>{
+
+        if(req.params.pass_string){
+        if (req.params.pass_string == 'perforce'){
+            try {
+                const updatedContact = await Contact.findByIdAndDelete(req.body.id,{$set: req.body},{ new: true });
+                if(updatedContact)
+                 res.status(200).json(updatedContact);
+            } catch (error) {
+                res.status(500).json("Could Not Update " + error)
+            }
+        }
+        else
+        res.status(401).json("You are NOT allowed to create contact")
+    }
+    else
+    res.status(400).json("Something went wrong! Contact the administrator")
+
+}
