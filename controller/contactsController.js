@@ -51,6 +51,10 @@ exports.getAllContacts = async (req,res) =>{
 
 
 // Update Contact 
+
+
+
+/*
 exports.updateContact = async (req,res)=>{
   //  const startTime = Date.now();
   // console.log(`[${Date.now() - startTime}ms] Starting to update in the database`);
@@ -72,6 +76,31 @@ exports.updateContact = async (req,res)=>{
     else
     res.status(400).json("Something went wrong! Contact the administrator")
 }
+*/
+
+
+
+exports.updateContact = async (req,res)=>{
+        if(req.params.pass_string){
+        if (req.params.pass_string == 'perforce'){
+            const { id, name, email, phone } = req.body;
+            //console.log(id);
+            try {
+                const updatedContact = await Contact.findOne({_id:id});
+                console.log("Printing the value of updatedContact\n"+updatedContact);
+                res.status(200).json(updatedContact);
+            } catch (error) {
+                res.status(500).json("Could Not Update " + error)
+            }
+        }
+        else
+        res.status(401).json("You are NOT allowed to create contact")
+    }
+    else
+    res.status(400).json("Something went wrong! Contact the administrator")
+}
+
+
 
 
 //Delete Contact
