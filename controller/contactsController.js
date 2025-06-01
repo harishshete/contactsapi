@@ -86,7 +86,7 @@ exports.updateContact = async (req,res)=>{
             const { id, name, email, phone } = req.body;
             //console.log(id);
             try {
-                const updatedContact = await Contact.findOne({name:req.body.name});
+                const updatedContact = await Contact.findOne({_id:req.body.id});
                 console.log("Printing the value of updatedContact\n"+updatedContact);
                 res.status(200).json(updatedContact);
             } catch (error) {
