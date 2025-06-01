@@ -1,9 +1,8 @@
 const contacts = require('../models/contacts');
 const Contact = require('../models/contacts');
 
+//Create Contacts
 exports.creaateContact = async (req, res, next) =>{
-//    res.status(200).json({pass_string:req.params.pass_string})
-
 if(req.params.pass_string){
         if (req.params.pass_string == 'perforce')
         {
@@ -55,9 +54,11 @@ exports.getAllContacts = async (req,res) =>{
 exports.updateContact = async (req,res)=>{
 
         if(req.params.pass_string){
+
         if (req.params.pass_string == 'perforce'){
+            const { id, name, email, phone } = req.body;
             try {
-                const updatedContact = await Contact.findByIdAndUpdate(req.body.id,{$set: req.body},{ new: true });
+                const updatedContact = await Contact.findByIdAndUpdate(id,{$set: { name, email, phone } },{ new: true });
                 if(updatedContact)
                  res.status(200).json(updatedContact);
             } catch (error) {
