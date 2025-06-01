@@ -55,9 +55,7 @@ exports.updateContact = async (req,res)=>{
   //  const startTime = Date.now();
   // console.log(`[${Date.now() - startTime}ms] Starting to update in the database`);
         if(req.params.pass_string){
-
         if (req.params.pass_string == 'perforce'){
-             console.log(`[${Date.now() - startTime}ms] checked pass_string, it looks correct`);
             const { id, name, email, phone } = req.body;
             try {
                 const updatedContact = await Contact.findByIdAndUpdate(id,{$set: { name, email, phone } },{ new: true });
