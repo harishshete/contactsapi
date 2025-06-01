@@ -4,7 +4,7 @@ const contacts = require('../controller/contactsController');
 
 router.post('/create/:pass_string',contacts.creaateContact);
 router.get('/getcontacts/:pass_string',contacts.getAllContacts);
-router.patch('/update/:pass_string',contacts.updateContact)
-router.delete('/delete/:pass_string',contacts.deleteContact)
+router.patch('/update/:pass_string',contacts.updateContact);
+router.delete('/delete/:pass_string',contacts.deleteContact);
 
 module.exports = router;

@@ -52,13 +52,16 @@ exports.getAllContacts = async (req,res) =>{
 
 // Update Contact 
 exports.updateContact = async (req,res)=>{
-
+    const startTime = Date.now();
         if(req.params.pass_string){
 
         if (req.params.pass_string == 'perforce'){
+             console.log(`[${Date.now() - startTime}ms] checked pass_string, it looks correct`);
             const { id, name, email, phone } = req.body;
             try {
+                console.log(`[${Date.now() - startTime}ms] Starting to update in the database`);
                 const updatedContact = await Contact.findByIdAndUpdate(id,{$set: { name, email, phone } },{ new: true });
+                console.log(`[${Date.now() - startTime}ms] Immediately after update Contact`);
                 if(updatedContact)
                  res.status(200).json(updatedContact);
             } catch (error) {
